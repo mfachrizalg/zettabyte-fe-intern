@@ -3,74 +3,247 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Zettabyte FE Technical Test</title>
+        <title>Simple Pricing Implementation</title>
+        <style>
+            /* CSS STYLES */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: "Segoe UI", sans-serif;
+                background-color: #f9f9f9;
+            }
+
+            /* Header */
+            .pricing-header {
+                background-color: #1e2648;
+                color: white;
+                text-align: center;
+                padding: 80px 20px 160px 20px; /* Extra bottom padding for overlap */
+            }
+            .pricing-header h1 {
+                font-size: 2.5rem;
+                font-weight: 400;
+                margin-bottom: 15px;
+            }
+            .pricing-header p {
+                color: #8e94a8;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            /* Layout */
+            .cards-container {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                margin-top: -100px; /* The overlap trick */
+                padding: 0 20px;
+            }
+
+            /* Card Design */
+            .card {
+                background: white;
+                width: 300px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+                transition:
+                    transform 0.3s ease,
+                    border 0.2s ease;
+                position: relative;
+                border: 2px solid transparent; /* Invisible border to prevent layout jump on select */
+            }
+
+            /* FEATURE 1: Hover Zoom */
+            .card:hover {
+                transform: scale(1.05);
+                z-index: 10;
+            }
+
+            /* FEATURE 3: Selected State */
+            .card.active-card {
+                border-color: #0099e6;
+                transform: scale(1.05); /* Keep zoomed if selected */
+                box-shadow: 0 10px 25px rgba(0, 153, 230, 0.3);
+            }
+
+            .card-header {
+                background-color: #3f4453;
+                color: white;
+                padding: 15px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .card-header h3 {
+                font-size: 1rem;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+            .badge {
+                font-size: 0.75rem;
+                color: #ccc;
+            }
+
+            .card-body {
+                padding: 30px;
+                text-align: center;
+            }
+
+            .price {
+                font-size: 3.5rem;
+                color: #333;
+                font-weight: 300;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+            }
+            .currency {
+                font-size: 1.5rem;
+                margin-top: 10px;
+            }
+            .period {
+                font-size: 1rem;
+                color: #999;
+                margin-top: 35px;
+                margin-left: 5px;
+            }
+
+            hr {
+                border: 0;
+                border-top: 1px solid #eee;
+                margin: 25px 0;
+            }
+
+            .features {
+                list-style: none;
+                text-align: left;
+                margin-bottom: 30px;
+                color: #555;
+            }
+            .features li {
+                margin-bottom: 10px;
+            }
+            .features strong {
+                color: #000;
+            }
+
+            /* Button */
+            .btn-buy {
+                background-color: #0099e6;
+                color: white;
+                border: none;
+                padding: 12px 0;
+                width: 100%;
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 4px;
+                transition: background 0.2s;
+            }
+            .btn-buy:hover {
+                background-color: #007bb8;
+            }
+
+            /* FAQ Title Placeholder */
+            .faq-title {
+                text-align: center;
+                margin-top: 60px;
+                color: #666;
+                font-size: 1.5rem;
+            }
+        </style>
     </head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-
     <body>
-        <div id="root">
-            <div>
-                <h1>Simple Pricing!</h1>
-                <p>
-                    The most advanced customer support tools with a simple and
-                    affordable pricing. And you can always try for 30 days,
-                    free!
-                </p>
-            </div>
-        </div>
-        <div>
-            <h2>Basic</h2>
-            <ul>
-                <li>4 months</li>
-                <li>10 Projects</li>
-                <li>10 Pages</li>
-                <li>100 MB Disk Space</li>
-            </ul>
-        </div>
-        <div>
-            <h2>Standard</h2>
-            <ul>
-                <li>8 months</li>
-                <li>20 Projects</li>
-                <li>20 Pages</li>
-                <li>200 MB Disk Space</li>
-            </ul>
-        </div>
-        <div>
-            <h2>Advanced</h2>
-            <ul>
-                <li>12/ months</li>
-                <li>40 Projects</li>
-                <li>40 Pages</li>
-                <li>500 MB Disk Space</li>
-            </ul>
-        </div>
+        <header class="pricing-header">
+            <h1>Simple Pricing!</h1>
+            <p>
+                The most advanced customer support tools with a simple and
+                affordable pricing. And you can always try for 30 days, free!
+            </p>
+        </header>
 
-        <div>
-            <h3>Frequently Asked Questions</h3>
-            <div>
-                <h4>How does free trial work?</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    euismod, nisl eget aliquam aliquet, nisl nisl aliquet nisl,
-                    eget aliquet nisl nisl eget nisl.
-                </p>
+        <section class="cards-container">
+            <div class="card">
+                <div class="card-header"><h3>BASIC</h3></div>
+                <div class="card-body">
+                    <div class="price">
+                        <span class="currency">$</span>4<span class="period"
+                            >/ month</span
+                        >
+                    </div>
+                    <hr />
+                    <ul class="features">
+                        <li><strong>10</strong> Projects</li>
+                        <li><strong>10</strong> Pages</li>
+                        <li><strong>100</strong> Mb Disk Space</li>
+                    </ul>
+                    <button class="btn-buy">BUY NOW</button>
+                </div>
             </div>
-            <div>
-                <h4>Can I cancel anytime?</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                    euismod, nisl eget aliquam aliquet, nisl nisl aliquet nisl,
-                    eget aliquet nisl nisl eget nisl.
-                </p>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>STANDARD <span class="badge">Save 15%</span></h3>
+                </div>
+                <div class="card-body">
+                    <div class="price">
+                        <span class="currency">$</span>8<span class="period"
+                            >/ month</span
+                        >
+                    </div>
+                    <hr />
+                    <ul class="features">
+                        <li><strong>20</strong> Projects</li>
+                        <li><strong>20</strong> Pages</li>
+                        <li><strong>200</strong> Mb Disk Space</li>
+                    </ul>
+                    <button class="btn-buy">BUY NOW</button>
+                </div>
             </div>
-        </div>
+
+            <div class="card">
+                <div class="card-header"><h3>ADVANCED</h3></div>
+                <div class="card-body">
+                    <div class="price">
+                        <span class="currency">$</span>12<span class="period"
+                            >/ month</span
+                        >
+                    </div>
+                    <hr />
+                    <ul class="features">
+                        <li><strong>40</strong> Projects</li>
+                        <li><strong>40</strong> Pages</li>
+                        <li><strong>500</strong> Mb Disk Space</li>
+                    </ul>
+                    <button class="btn-buy">BUY NOW</button>
+                </div>
+            </div>
+        </section>
+
+        <h2 class="faq-title">Frequently Asked Questions</h2>
+
+        <script>
+            // Feature 2 & 3: Selection and Alert
+            const cards = document.querySelectorAll(".card");
+
+            cards.forEach((card) => {
+                // Logic for Card Select
+                card.addEventListener("click", function () {
+                    // Reset all others
+                    cards.forEach((c) => c.classList.remove("active-card"));
+                    // Activate this one
+                    this.classList.add("active-card");
+                });
+
+                // Logic for Button
+                const btn = card.querySelector(".btn-buy");
+                btn.addEventListener("click", function (e) {
+                    e.stopPropagation(); // Prevents the card click event from firing
+                    alert("Success! Proceeding to checkout...");
+                });
+            });
+        </script>
     </body>
-    <script></script>
 </html>
